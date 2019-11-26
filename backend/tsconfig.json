@@ -26,9 +26,6 @@
         "src/Server"
       ]
     },
-    "types": [
-      "node"
-    ],
     "typeRoots": [
       "node_modules/@types"
     ]
