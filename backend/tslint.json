@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "member-ordering": false,
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "quotemark": [true, "single"]
+  },
+  "linterOptions": {
+    "exclude": ["./node_modules/**"]
+  },
+  "extends": ["tslint:latest", "tslint-config-prettier"],
+  "plugins": [{ "name": "typescript-tslint-plugin" }]
+}
