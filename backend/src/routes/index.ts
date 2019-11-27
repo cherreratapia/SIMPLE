@@ -3,6 +3,7 @@ import UserRouter from "./Users";
 import { productsHandlers } from "./Products/index";
 import { AxiosStatic } from "axios";
 import { RedisClient } from "redis";
+import retry from "async-retry";
 
 const baseRouterHandler = ({
   axios,

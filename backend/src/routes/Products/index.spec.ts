@@ -1,5 +1,5 @@
 import { productsHandlers } from "./index";
-import { PRODUCTS_SKU } from "../../util";
+import { PRODUCTS_SKU, isError } from "../../util";
 
 describe("Product Router", () => {
   describe("Get by Part Number", () => {
@@ -11,7 +11,8 @@ describe("Product Router", () => {
       };
       const res = {
         status: jest.fn().mockReturnThis(),
-        send: jest.fn()
+        send: jest.fn(),
+        json: jest.fn()
       };
       const axios = {
         get: jest.fn().mockResolvedValue({
@@ -29,11 +30,14 @@ describe("Product Router", () => {
         setex: jest.fn()
       };
       await productsHandlers({ axios, client }).getByParamNumber(req, res);
-      expect(res.status.mock.calls).toEqual([[201]]);
-      expect(res.send.mock.calls).toEqual([[{ name: "test", price: 1000 }]]);
-      expect(axios.get.mock.calls).toEqual([
-        [`https://simple.ripley.cl/api/v2/products/${req.query.id}`]
-      ]);
+      if (isError()) {
+        console.log("isError", isError);
+        expect(res.status.mock.calls).toEqual([[201]]);
+        expect(res.send.mock.calls).toEqual([[{ name: "test", price: 1000 }]]);
+        expect(axios.get.mock.calls).toEqual([
+          [`https://simple.ripley.cl/api/v2/products/${req.query.id}`]
+        ]);
+      }
     });
   });
   describe("Get all products", () => {
@@ -58,16 +62,21 @@ describe("Product Router", () => {
         setex: jest.fn()
       };
       await productsHandlers({ axios, client }).get(req, res);
-      expect(res.status.mock.calls).toEqual([[201]]);
-      expect(res.send.mock.calls).toEqual([
-        [
+      if (isError()) {
+        expect(res.status.mock.calls).toEqual([[201]]);
+        expect(res.send.mock.calls).toEqual([
           [
-            { name: "Object 1", price: 1000 },
-            { name: "Object 1", price: 1000 },
-            { name: "Object 1", price: 1000 }
+            [
+              { name: "Object 1", price: 1000 },
+              { name: "Object 1", price: 1000 },
+              { name: "Object 1", price: 1000 }
+            ]
           ]
-        ]
-      ]);
+        ]);
+      } else {
+        expect(res.status.mock.calls).toEqual([[404]]);
+        expect(res.send.mock.calls).toEqual([{}]);
+      }
     });
   });
 });
