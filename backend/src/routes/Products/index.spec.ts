@@ -48,7 +48,7 @@ describe("Product Router", () => {
           data: { name: "Object 1", price: 1000 }
         })
       };
-      const productCached = "product:detail";
+      const productCached = "product:list";
       const client = {
         get: jest
           .fn()

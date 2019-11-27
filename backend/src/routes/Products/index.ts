@@ -32,14 +32,30 @@ const productsHandlers = ({ axios, client }: { axios: any; client: any }) => ({
   get: async (req: any, res: any) => {
     const skuList = PRODUCTS_SKU;
     const productsListCached = "product:list";
-    const response = [];
-    for (const SKU of skuList) {
-      const { data } = await axios.get(
-        `https://simple.ripley.cl/api/v2/products/${SKU}`
-      );
-      response.push(data);
-    }
-    return res.status(201).send(response);
+    console.log("antes de redis");
+    return client.get(
+      productsListCached,
+      async (err: any, productList: any) => {
+        try {
+          if (productList) {
+            return res.status(201).send(JSON.parse(productList));
+          } else {
+            const response = [];
+            for (const SKU of skuList) {
+              const { data } = await axios.get(
+                `https://simple.ripley.cl/api/v2/products/${SKU}`
+              );
+              response.push(data);
+            }
+            client.setex(productsListCached, 120, JSON.stringify(response));
+            return res.status(201).send(response);
+          }
+        } catch (error) {
+          console.log(`Error de redis en GET all ${error}`);
+          return res.status(400);
+        }
+      }
+    );
   }
 });
 
