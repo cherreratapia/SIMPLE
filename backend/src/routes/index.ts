@@ -16,7 +16,7 @@ const baseRouterHandler = ({
 
   // Product Router
   const ProductRouter = Router();
-  // ProductRouter.get("/", productsHandlers({ axios }).get);
+  ProductRouter.get("/", productsHandlers({ axios, client }).get);
   ProductRouter.get(
     "/:id",
     productsHandlers({ axios, client }).getByParamNumber
