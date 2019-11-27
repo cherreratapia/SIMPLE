@@ -4,6 +4,7 @@ import { productsHandlers } from "./Products/index";
 import { AxiosStatic } from "axios";
 import { RedisClient } from "redis";
 import retry from "async-retry";
+import randomizeFetch from "../shared/middlewares/randomizeFetch";
 
 const baseRouterHandler = ({
   axios,
@@ -17,7 +18,11 @@ const baseRouterHandler = ({
 
   // Product Router
   const ProductRouter = Router();
-  ProductRouter.get("/", productsHandlers({ axios, client }).get);
+  ProductRouter.get(
+    "/",
+    randomizeFetch,
+    productsHandlers({ axios, client }).get
+  );
   ProductRouter.get(
     "/:id",
     productsHandlers({ axios, client }).getByParamNumber
