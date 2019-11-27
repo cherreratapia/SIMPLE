@@ -4,12 +4,12 @@ import { Request, Response } from "express";
 import logger from "morgan";
 import path from "path";
 import BaseRouter from "./routes";
-import redis, { RedisError } from "redis";
+import redis, { RedisError, RedisClient } from "redis";
 import fetch from "node-fetch";
 import admin from "firebase-admin";
 import authenticate from "./shared/middlewares/authenticate";
+import axios from "axios";
 const serviceAccount = require("../config/simple-ripley-firebase-adminsdk-aqp5i-2e5cbd2316.json");
-
 // Init express
 const app = express();
 
@@ -24,7 +24,7 @@ admin.initializeApp({
 */
 
 // Create client of redis
-const client = redis.createClient(6379);
+const client: RedisClient = redis.createClient(6379);
 
 // Add middleware/settings/routes to express.
 app.use(logger("dev"));
@@ -32,7 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/api", BaseRouter);
+app.use("/api", BaseRouter({ axios, client }));
 
 client.on("error", (err: RedisError) => {
   console.log(`Error on redis client: ${err.message}`);

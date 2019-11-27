@@ -1,0 +1,46 @@
+import { logger } from "@shared";
+import { Request, Response, Router, NextFunction, Express } from "express";
+import { BAD_REQUEST, CREATED, OK } from "http-status-codes";
+import { paramMissingError } from "@shared";
+import { ParamsDictionary } from "express-serve-static-core";
+import { RedisClient } from "redis";
+import { PRODUCTS_SKU } from "../../util/index";
+
+const productsHandlers = ({ axios, client }: { axios: any; client: any }) => ({
+  getByParamNumber: async (req: any, res: any) => {
+    const productCached = "product:detail";
+    return client.get(productCached, async (err: any, productDetail: any) => {
+      if (err) {
+        console.log(`Error de redis ${err}`);
+      }
+      try {
+        if (productDetail) {
+          return res.status(201).send(JSON.parse(productDetail));
+        } else {
+          const { data } = await axios.get(
+            `https://simple.ripley.cl/api/v2/products/${req.query.id}`
+          );
+          client.setex(productCached, 120, JSON.stringify(data));
+          return res.status(201).send(data);
+        }
+      } catch (error) {
+        console.log(`Error al obtener producto ${error}`);
+        return res.status(400);
+      }
+    });
+  },
+  get: async (req: any, res: any) => {
+    const skuList = PRODUCTS_SKU;
+    const productsListCached = "product:list";
+    const response = [];
+    for (const SKU of skuList) {
+      const { data } = await axios.get(
+        `https://simple.ripley.cl/api/v2/products/${SKU}`
+      );
+      response.push(data);
+    }
+    return res.status(201).send(response);
+  }
+});
+
+export { productsHandlers };
