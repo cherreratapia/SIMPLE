@@ -1,0 +1,43 @@
+<mat-card>
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab label="Iniciar sesión">
+        <div class="d-flex flex-column m-4 p-2 px-4 mat-elevation-z2">
+          <h2>Iniciar sesión</h2>
+          <div class="d-flex flex-column mt-3 mb-3 mx-5">
+            <form class="d-flex flex-column" [formGroup]="login" (ngSubmit)="signIn()">
+              <mat-form-field class="w-full">
+                <input matInput placeholder="Usuario" formControlName="user">
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <input type="password" matInput placeholder="Contraseña" formControlName="password">
+              </mat-form-field>
+              <button mat-raised-button color="primary" type="submit" [disabled]="!login.valid">Iniciar
+                sesión</button>
+            </form>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Registrar">
+        <div class="d-flex flex-column m-4 p-2 px-4 mat-elevation-z2">
+          <h2>Iniciar sesión</h2>
+          <div class="d-flex flex-column mt-3 mb-3 mx-5">
+            <form class="d-flex flex-column" [formGroup]="register" (ngSubmit)="signUp()">
+              <mat-form-field class="w-full">
+                <input matInput placeholder="Nombre" formControlName="name">
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <input matInput placeholder="Usuario" formControlName="user">
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <input type="password" matInput placeholder="Contraseña" formControlName="password">
+              </mat-form-field>
+              <button mat-raised-button color="primary" type="submit" [disabled]="!register.valid">Registrarse
+              </button>
+            </form>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>
