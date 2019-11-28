@@ -1,45 +1,30 @@
 import { IProduct } from "@entities";
+import { AxiosStatic } from "axios";
+import { RedisClient, RedisError } from "redis";
+import { PRODUCTS_SKU } from "../../util/index";
+import { Request } from "express";
 
-export interface IProductsDao {
+export interface IProductDao {
   getAll: () => Promise<IProduct[]>;
-  add: (user: IProduct) => Promise<void>;
-  update: (user: IProduct) => Promise<void>;
-  delete: (id: number) => Promise<void>;
+  getById: (id: String) => Promise<void>;
 }
 
-export class ProductsDao implements IProductsDao {
-  /**
-   *
-   */
-  public async getAll(): Promise<IProduct[]> {
-    // TODO
-    return [] as any;
+export class ProductDao implements IProductDao {
+  axios: AxiosStatic;
+  redis: RedisClient;
+
+  constructor(axios: AxiosStatic, redis: RedisClient) {
+    this.axios = axios;
+    this.redis = redis;
   }
 
-  /**
-   *
-   * @param product
-   */
-  public async add(product: IProduct): Promise<void> {
-    // TODO
-    return {} as any;
-  }
-
-  /**
-   *
-   * @param product
-   */
-  public async update(product: IProduct): Promise<void> {
-    // TODO
-    return {} as any;
-  }
+  public async getAll(): Promise<any> {}
 
   /**
    *
    * @param id
    */
-  public async delete(id: number): Promise<void> {
-    // TODO
-    return {} as any;
+  public async getById(id: String): Promise<any> {
+    
   }
 }
