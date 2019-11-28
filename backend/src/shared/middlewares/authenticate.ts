@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from "express";
-const authenticate = (admin: any) => {
-  return async (req: any, res: any, next: NextFunction) => {
+import admin = require("firebase-admin");
+
+const authenticate = (admin: admin.app.App) => {
+  return async (req: Request, res: any, next: NextFunction) => {
     try {
       const token: any = req.header("authToken");
       const result = await admin.auth().verifyIdToken(token);
-      console.log("result", result);
       if (result) {
         next();
       }

@@ -5,17 +5,15 @@ import logger from "morgan";
 import path from "path";
 import BaseRouter from "./routes";
 import redis, { RedisError, RedisClient } from "redis";
-import fetch from "node-fetch";
 import admin from "firebase-admin";
-import authenticate from "./shared/middlewares/authenticate";
 import axios from "axios";
-const serviceAccount = require("../config/simple-ripley-firebase-adminsdk-aqp5i-2e5cbd2316.json");
+const serviceAccount = require("../config/simple-ripley-9c988-firebase-adminsdk-mcxxq-a309bc538f.json");
 // Init express
 const app = express();
 
-admin.initializeApp({
+const auth = admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://simple-ripley.firebaseio.com"
+  databaseURL: "https://simple-ripley-9c988.firebaseio.com"
 });
 
 //token
@@ -32,7 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/api", BaseRouter({ axios, client }));
+app.use("/api", BaseRouter({ auth, axios, client }));
 
 client.on("error", (err: RedisError) => {
   console.log(`Error on redis client: ${err.message}`);

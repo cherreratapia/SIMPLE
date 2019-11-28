@@ -2,12 +2,16 @@ import { Router } from "express";
 import { productsHandlers } from "./Products";
 import { AxiosStatic } from "axios";
 import { RedisClient } from "redis";
+import authenticate from "../shared/middlewares/authenticate";
 import randomizeFetch from "../shared/middlewares/randomizeFetch";
+import admin from "firebase-admin";
 
 const baseRouterHandler = ({
+  auth,
   axios,
   client
 }: {
+  auth: admin.app.App;
   axios: AxiosStatic;
   client: RedisClient;
 }) => {
@@ -18,12 +22,12 @@ const baseRouterHandler = ({
   const ProductRouter = Router();
   ProductRouter.get(
     "/",
-    randomizeFetch,
+    [authenticate(auth), randomizeFetch],
     productsHandlers({ axios, client }).get
   );
   ProductRouter.get(
     "/:id",
-    randomizeFetch,
+    [authenticate, randomizeFetch],
     productsHandlers({ axios, client }).getByParamNumber
   );
 

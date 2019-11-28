@@ -42,8 +42,17 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  signIn() {
-    console.log("login");
+  async signIn(email, password) {
+    try {
+      const { user } = await this.fireAuth.auth.signInWithEmailAndPassword(
+        email,
+        password
+      );
+      const token = await user.getIdToken();
+      console.log("result", token);
+    } catch (error) {
+      console.log("error", error);
+    }
   }
   signUp() {
     console.log("Register");
@@ -57,9 +66,12 @@ export class SignInComponent implements OnInit {
     return this.fireAuth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(result => {
+        this.signIn(email, password);
+        console.log("result", result);
         /* Call the SendVerificaitonMail() function when new user sign 
         up and returns promise */
-        this.SetUserData(result.user);
+        const us = this.SetUserData(result.user);
+        console.log("us", us);
       })
       .catch(error => {
         window.alert(error.message);
