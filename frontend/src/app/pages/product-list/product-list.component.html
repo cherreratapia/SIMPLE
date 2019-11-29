@@ -1,1 +1,7 @@
-<p>product-list works!</p>
+<div class="container mx-auto">
+  <mat-grid-list cols="3">
+    <mat-grid-tile *ngFor="let product of productList" [colspan]="1" [rowspan]="1">
+      <app-product [product]="product"></app-product>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

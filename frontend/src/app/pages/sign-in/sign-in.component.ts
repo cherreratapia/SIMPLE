@@ -5,6 +5,9 @@ import {
   AngularFirestoreDocument,
   AngularFirestore
 } from "@angular/fire/firestore";
+import { Router } from "@angular/router";
+import { AuthService } from "../../services/auth.service";
+import { User } from "src/app/models/user";
 
 @Component({
   selector: "app-sign-in",
@@ -14,19 +17,20 @@ import {
 export class SignInComponent implements OnInit {
   userData: any = {};
   login = this.fb.group({
-    user: ["", [Validators.required]],
+    email: ["", [Validators.required]],
     password: ["", [Validators.required, Validators.minLength(6)]]
   });
   register = this.fb.group({
-    name: ["", [Validators.required]],
-    user: ["", [Validators.required]],
+    email: ["", [Validators.required]],
     password: ["", [Validators.required, Validators.minLength(6)]]
   });
 
   constructor(
+    public authService: AuthService,
     private fb: FormBuilder,
     private fireAuth: AngularFireAuth,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -42,40 +46,54 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  async signIn(email, password) {
+  forgotPassword() {
+    this.router.navigate(["reset-password"]);
+  }
+
+  async signIn(email: string, password: string) {
     try {
       const { user } = await this.fireAuth.auth.signInWithEmailAndPassword(
         email,
         password
       );
       const token = await user.getIdToken();
-      console.log("result", token);
+      const _user = new User(
+        user.email,
+        user.emailVerified,
+        user.displayName,
+        user.photoURL,
+        user.uid,
+        token
+      );
+      this.authService.setUser(_user, token);
+      this.router.navigate(["product"]);
     } catch (error) {
       console.log("error", error);
     }
   }
-  signUp() {
-    console.log("Register");
-    this.SignUpAuth(
-      this.register.get("user").value,
-      this.register.get("password").value
-    );
-  }
 
-  SignUpAuth(email, password) {
-    return this.fireAuth.auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(result => {
-        this.signIn(email, password);
-        console.log("result", result);
-        /* Call the SendVerificaitonMail() function when new user sign 
-        up and returns promise */
-        const us = this.SetUserData(result.user);
-        console.log("us", us);
-      })
-      .catch(error => {
-        window.alert(error.message);
-      });
+  async signUp() {
+    try {
+      const email = this.register.controls.email.value;
+      const password = this.register.controls.password.value;
+      const {
+        user
+      }: {
+        user: firebase.User;
+      } = await this.fireAuth.auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      if (user) {
+        await this.signIn(email, password);
+        console.log("result", user);
+        const us = this.SetUserData(user);
+      } else {
+        console.log("error...");
+      }
+    } catch (error) {
+      console.log("error > ", error.message);
+    }
   }
   SetUserData(user) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(

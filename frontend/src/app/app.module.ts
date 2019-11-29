@@ -18,27 +18,49 @@ import {
   MatDividerModule,
   MatFormFieldModule,
   MatInputModule,
-  MatButtonModule
+  MatButtonModule,
+  MatGridListModule
 } from "@angular/material/";
+import { ForgottenPasswordComponent } from "./pages/forgotten-password/forgotten-password.component";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HttpInterceptorCustom } from "./services/interceptor";
+import { AuthService } from "./services/auth.service";
+import { AuthGuard } from "./services/auth.guard";
+import { ProductComponent } from './components/product/product.component';
 
 @NgModule({
-  declarations: [AppComponent, ProductListComponent, SignInComponent],
+  declarations: [
+    AppComponent,
+    ProductListComponent,
+    SignInComponent,
+    ForgottenPasswordComponent,
+    ProductComponent
+  ],
   imports: [
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatCardModule,
     MatTabsModule,
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatGridListModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorCustom,
+      multi: true
+    }
+  ]
 })
 export class AppModule {}
