@@ -26,7 +26,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HttpInterceptorCustom } from "./services/interceptor";
 import { AuthService } from "./services/auth.service";
 import { AuthGuard } from "./services/auth.guard";
-import { ProductComponent } from './components/product/product.component';
+import { ProductComponent } from "./components/product/product.component";
 
 @NgModule({
   declarations: [
