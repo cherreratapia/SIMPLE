@@ -6,7 +6,6 @@ import { ProductDao } from "../../daos/";
 
 const productsHandlers = ({ axios, client }: { axios: any; client: any }) => ({
   getByParamNumber: async (req: Request, res: Response) => {
-    const productDao = new ProductDao(axios, client);
     if (req.params.id) {
       const productCached = `product:${req.params.id}`;
       return client.get(productCached, async (err: any, productDetail: any) => {
@@ -36,7 +35,6 @@ const productsHandlers = ({ axios, client }: { axios: any; client: any }) => ({
       .json({ error: "Error al obtener el detalle del producto" });
   },
   get: (req: Request, res: Response) => {
-    const productDao = new ProductDao(axios, client);
     const productsListCached = "product:list";
     const skuList = PRODUCTS_SKU;
     let products: any = [];
@@ -45,8 +43,10 @@ const productsHandlers = ({ axios, client }: { axios: any; client: any }) => ({
       async (err: any, productList: any) => {
         try {
           if (productList) {
+            console.log("product cached");
             res.status(200).json({ data: JSON.parse(productList) });
           } else {
+            console.log("no cached");
             for (const SKU of skuList) {
               const { data } = await axios.get(
                 `https://simple.ripley.cl/api/v2/products/${SKU}`

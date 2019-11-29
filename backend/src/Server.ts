@@ -5,8 +5,10 @@ import logger from "morgan";
 import path from "path";
 import BaseRouter from "./routes";
 import redis, { RedisError, RedisClient } from "redis";
+
 import admin from "firebase-admin";
 import axios from "axios";
+import cors from "cors";
 const serviceAccount = require("../config/simple-ripley-9c988-firebase-adminsdk-mcxxq-a309bc538f.json");
 // Init express
 const app = express();
@@ -29,8 +31,9 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/api", BaseRouter({ auth, axios, client }));
+app.use("/api/v1", BaseRouter({ auth, axios, client }));
 
 client.on("error", (err: RedisError) => {
   console.log(`Error on redis client: ${err.message}`);
