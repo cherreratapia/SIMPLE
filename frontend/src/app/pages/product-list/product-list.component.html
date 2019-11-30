@@ -1,5 +1,5 @@
 <div class="container mx-auto">
-  <mat-grid-list cols="3">
+  <mat-grid-list cols="3" rowHeight="350">
     <mat-grid-tile *ngFor="let product of productList" [colspan]="1" [rowspan]="1">
       <div class="h-100 col p-2">
         <app-product [product]="product"></app-product>

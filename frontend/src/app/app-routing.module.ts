@@ -4,6 +4,7 @@ import { AuthGuard } from "./services/auth.guard";
 import { SignInComponent } from "./pages/sign-in/sign-in.component";
 import { ForgottenPasswordComponent } from "./pages/forgotten-password/forgotten-password.component";
 import { ProductListComponent } from "./pages/product-list/product-list.component";
+import { ProductDetailComponent } from "./pages/product-detail/product-detail.component";
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
     path: "product",
     component: ProductListComponent
     // canActivate: [AuthGuard]
+  },
+  {
+    path: "product-detail/:partNumber",
+    component: ProductDetailComponent
   }
 ];
 

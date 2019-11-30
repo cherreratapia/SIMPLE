@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { NgModule, LOCALE_ID } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -27,14 +27,19 @@ import { HttpInterceptorCustom } from "./services/interceptor";
 import { AuthService } from "./services/auth.service";
 import { AuthGuard } from "./services/auth.guard";
 import { ProductComponent } from "./components/product/product.component";
+import { registerLocaleData } from "@angular/common";
 
+import localeCL from "@angular/common/locales/es-CL";
+import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+registerLocaleData(localeCL, "es-CL");
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
     SignInComponent,
     ForgottenPasswordComponent,
-    ProductComponent
+    ProductComponent,
+    ProductDetailComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -60,6 +65,10 @@ import { ProductComponent } from "./components/product/product.component";
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorCustom,
       multi: true
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: "es-CL"
     }
   ]
 })
