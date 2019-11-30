@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ProductService } from "src/app/services/product.service";
 import { Product } from "src/app/models/product";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-product-list",
@@ -9,7 +10,7 @@ import { Product } from "src/app/models/product";
 })
 export class ProductListComponent implements OnInit {
   productList: Product[] = [];
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit() {
     this.productService
@@ -19,6 +20,12 @@ export class ProductListComponent implements OnInit {
         this.productList = result.data;
         console.log(this.productList);
       })
-      .catch(err => console.log("error", err));
+      .catch(error => {
+        console.error(`Error: `, error);
+        if (error && error.status && error.status === 403) {
+          console.log("error.status", error);
+          this.router.navigate(["/"]);
+        }
+      });
   }
 }

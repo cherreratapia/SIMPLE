@@ -1,66 +1,91 @@
 <ng-container *ngIf="product">
-  <div class="container mx-auto d-flex flex-row">
-    <div class="d-flex col-7">
-      <img class="img-fluid" [src]="product.fullImage" [alt]="product.name">
+  <div class="container mx-auto d-flex flex-row product-detail">
+    <div class="col-7 product-detail_img-viewer">
+      <app-img-viewer [imageProp]="product.images"></app-img-viewer>
     </div>
     <div class="d-flex flex-column col-5">
-      <div class="d-flex flex-row">
-        <p class="brand text-uppercase">{{ brand }}</p>
+      <div class="d-flex flex-row align-items-center">
+        <p class="product-detail_brand text-uppercase">{{ brand }}</p>
       </div>
-      <div class="d-flex flex-row">
-        <p class="name text-uppercase">{{ product.name }}</p>
+      <div class="d-flex flex-row align-items-center">
+        <h1 class="product-detail_name text-uppercase">{{ product.name }}</h1>
       </div>
-      <div class="d-flex flex-row">
-        <p class="sku">SKU: {{ product.partNumber }}</p>
+      <div class="d-flex flex-row align-items-center">
+        <p class="product-detail_sku">SKU: {{ product.partNumber }}</p>
       </div>
-      <div class="d-flex flex-row">
-        <p class="short-description">{{ product.shortDescription }}</p>
+      <div class="d-flex flex-row align-items-center">
+        <p class="product-detail_short-description">
+          {{ product.shortDescription }}
+        </p>
       </div>
       <div class="d-flex flex-column">
-        <div class="d-flex flex-row">
-          <div class="col-6 d-flex justify-content-start">
-            <p>Normal</p>
+        <div class="d-flex flex-row align-items-center mb-1">
+          <div class="p-0 col-6 d-flex justify-content-start">
+            <p class="product-detail_price">Normal</p>
           </div>
-          <div class="col-6 d-flex jutify-content-end">
-            <p>{{ product.prices.listPrice | currency: 'CLP' }}</p>
-          </div>
-        </div>
-
-        <div *ngIf="product.prices.offerPrice" class="d-flex flex-row">
-          <div class="col-6 d-flex justify-content-start">
-            <p>Oferta</p>
-          </div>
-          <div class="col-6 d-flex jutify-content-end">
-            <p>{{ product.prices.offerPrice | currency: 'CLP' }}</p>
-          </div>
-        </div>
-        <div *ngIf="product.prices.cardPrice" class="d-flex flex-row">
-          <div class="col-6 d-flex justify-content-start">
-            <p>Tarjeta Ripley</p>
-          </div>
-          <div class="col-6 d-flex jutify-content-end">
-            <p>{{ product.prices.cardPrice | currency: 'CLP' }}</p>
-          </div>
-        </div>
-        <div *ngIf="product.prices.discountPercentage" class="d-flex flex-row">
-          <div class="col-6 d-flex justify-content-start">
-            <p>Descuento<p>
-          </div>
-          <div class="col-6 d-flex jutify-content-end">
-            <p>{{ product.prices.discountPercentage }} %</p>
-          </div>
-        </div>
-        <div *ngIf="product.prices.ripleyPuntos" class="d-flex flex-row">
-          <div class="col-6 d-flex justify-content-start">
-            <p>Acumulas<p>
-          </div>
-          <div class="col-6 d-flex jutify-content-end">
-            <p>{{ product.prices.ripleyPuntos }} RipleyPuntos GO</p>
+          <div class="p-0 col-6 d-flex justify-content-end">
+            <p class="product-detail_price">
+              {{ product.prices.listPrice | currency: "CLP" }}
+            </p>
           </div>
         </div>
 
+        <div *ngIf="product.prices.offerPrice" class="d-flex flex-row align-items-center mb-1">
+          <div class="p-0 col-6 d-flex justify-content-start">
+            <p [class.product-detail_price]="product.prices.cardPrice"
+              [class.product-detail_price_lowest]="!product.prices.cardPrice">
+              Oferta
+            </p>
+          </div>
+          <div class="p-0 col-6 d-flex justify-content-end">
+            <p [class.product-detail_price]="product.prices.cardPrice"
+              [class.product-detail_price_lowest]="!product.prices.cardPrice">
+              {{ product.prices.offerPrice | currency: "CLP" }}
+            </p>
+          </div>
+        </div>
+        <div *ngIf="product.prices.cardPrice" class="d-flex flex-row align-items-center mb-1">
+          <div class="p-0 col-6 d-flex justify-content-start">
+            <p class="product-detail_price_lowest">Tarjeta Ripley</p>
+          </div>
+          <div class="p-0 col-6 d-flex justify-content-end">
+            <p class="product-detail_price_lowest">
+              {{ product.prices.cardPrice | currency: "CLP" }}
+            </p>
+          </div>
+        </div>
+        <div *ngIf="product.prices.discountPercentage" class="d-flex flex-row align-items-center mb-1">
+          <div class="p-0 col-6 d-flex justify-content-start align-items-center">
+            <p class="product-detail_discount">Descuento</p>
+            <p></p>
+          </div>
+
+          <div class="p-0 col-6 d-flex justify-content-end">
+            <div class="product-detail_discount_arrow">
+              <p class="product-detail_discount_arrow_text">
+                {{ product.prices.discountPercentage }} %
+              </p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="product.prices.ripleyPuntos" class="d-flex flex-row align-items-center mb-1 product-detail_points">
+          <div class="p-0 col-6 d-flex justify-content-start">
+            <p class="product-detail_points_text">Acumulas</p>
+            <p></p>
+          </div>
+
+          <div class="p-0 col-6 d-flex justify-content-end">
+            <p class="product-detail_points_text">
+              {{ product.prices.ripleyPuntos }} RipleyPuntos GO
+            </p>
+          </div>
+        </div>
+        <div class="d-flex flex-row justify-content-center">
+          <button mat-raised-button color="primary" class="w-100" type="button" (click)="goBack()">
+            Volver
+          </button>
+        </div>
       </div>
     </div>
   </div>
-
 </ng-container>

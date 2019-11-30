@@ -1,6 +1,6 @@
-<div class="d-flex flex-column col h-100 product" (click)="goToDetail(product)">
+<div class="d-flex flex-column col h-100 product mt-5" (click)="goToDetail(product)">
   <div class="d-flex flex-column w-100 mb-2 position-relative align-items-end">
-    <img class="img-fluid" [src]="product.fullImage" alt="product.name">
+    <app-img-viewer [imageProp]="product.images"></app-img-viewer>
     <ng-container *ngIf="product.prices.discountPercentage">
       <div class="position-absolute discount">
         <p>{{ product.prices.discountPercentage }} %</p>
@@ -14,10 +14,16 @@
     <p class="text-secondary name">{{ product.name }}</p>
   </div>
   <div class="d-flex flex-column">
-    <p [class.lowest-price]="!product.prices.offerPrice && !product.prices.cardPrice"
-      [class.list-price]="product.prices.offerPrice">{{ product.prices.listPrice | currency:'CLP'}}</p>
+    <p [class.lowest-price]="
+        !product.prices.offerPrice && !product.prices.cardPrice
+      " [class.list-price]="product.prices.offerPrice">
+      {{ product.prices.listPrice | currency: "CLP" }}
+    </p>
     <p [class.lowest-price]="!product.prices.cardPrice" [class.offer-price]="product.prices.cardPrice">
-      {{ product.prices.offerPrice | currency:'CLP' }}</p>
-    <p *ngIf="product.prices.cardPrice" class="lowest-price">{{ product.prices.cardPrice | currency: 'CLP' }}</p>
+      {{ product.prices.offerPrice | currency: "CLP" }}
+    </p>
+    <p *ngIf="product.prices.cardPrice" class="lowest-price">
+      {{ product.prices.cardPrice | currency: "CLP" }}
+    </p>
   </div>
 </div>

@@ -30,8 +30,13 @@ import { ProductComponent } from "./components/product/product.component";
 import { registerLocaleData } from "@angular/common";
 
 import localeCL from "@angular/common/locales/es-CL";
-import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { ProductDetailComponent } from "./pages/product-detail/product-detail.component";
 registerLocaleData(localeCL, "es-CL");
+
+import { ToastrModule } from "ngx-toastr";
+import { CarouselModule } from "ngx-owl-carousel-o";
+import { ImgViewerComponent } from './components/img-viewer/img-viewer.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,13 +44,16 @@ registerLocaleData(localeCL, "es-CL");
     SignInComponent,
     ForgottenPasswordComponent,
     ProductComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    ImgViewerComponent
   ],
   imports: [
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    CarouselModule,
     HttpClientModule,
     MatCardModule,
     MatTabsModule,

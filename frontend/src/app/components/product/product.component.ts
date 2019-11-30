@@ -10,6 +10,7 @@ import { Router } from "@angular/router";
 export class ProductComponent implements OnInit {
   @Input() product: Product;
   brand: string;
+
   constructor(private router: Router) {}
 
   ngOnInit() {
@@ -19,6 +20,7 @@ export class ProductComponent implements OnInit {
       ).value;
     }
   }
+
   goToDetail(product: Product) {
     this.router.navigate(["product-detail", product.partNumber]);
   }

@@ -1,0 +1,6 @@
+<div class="img-preview-container" #imgContainer>
+  <ng-container *ngFor="let image of images; let i = index">
+    <img *ngIf="image.isActive" class="img-fluid item" [class.d-none]="!image.isActive"
+      [class.fadeIn-anim]="image.isActive" [src]="image.uri" [alt]="i" />
+  </ng-container>
+</div>
