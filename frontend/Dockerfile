@@ -8,6 +8,8 @@ RUN apk update && apk upgrade && \
 # baja ultimos fuentes
 COPY . .
 
+RUN npm config set unsafe-perm true
+
 RUN npm install -g @angular/cli
 
 RUN npm install
