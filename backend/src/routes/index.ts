@@ -27,7 +27,7 @@ const baseRouterHandler = ({
   );
   ProductRouter.get(
     "/:id",
-    [authenticate, randomizeFetch],
+    [authenticate(auth), randomizeFetch],
     productsHandlers({ axios, client }).getByParamNumber
   );
 
