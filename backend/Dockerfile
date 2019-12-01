@@ -12,6 +12,7 @@ ARG ARG_PORT=3000
 COPY . .
 
 RUN apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python
+RUN rm -rf node_modules/
 RUN npm config set unsafe-perm true
 RUN npm cache clean --force
 RUN npm install node-pre-gyp node-gyp -g
