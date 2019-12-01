@@ -53,10 +53,11 @@ const productsHandlers = ({ axios, client }: { axios: any; client: any }) => ({
             console.log("skuList");
             for (const SKU of skuList) {
               console.log("SKU Iterated", SKU);
-              const { data } = await axios.get(
+              const result = await axios.get(
                 `https://simple.ripley.cl/api/v2/products/${SKU}`
               );
-              products.push(data);
+              console.log("result", result);
+              products.push(result.data);
             }
             client.setex(productsListCached, 120, JSON.stringify(products));
             res.status(200).json({ data: products });
