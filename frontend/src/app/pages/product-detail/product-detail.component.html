@@ -1,91 +1,109 @@
-<ng-container *ngIf="product">
-  <div class="container mx-auto d-flex flex-row product-detail">
-    <div class="col-7 product-detail_img-viewer">
-      <app-img-viewer [imageProp]="product.images"></app-img-viewer>
-    </div>
-    <div class="d-flex flex-column col-5">
-      <div class="d-flex flex-row align-items-center">
-        <p class="product-detail_brand text-uppercase">{{ brand }}</p>
+<div class="w-full">
+  <app-user-bar></app-user-bar>
+  <div class="container mx-auto">
+    <ng-container *ngIf="!product; else showTemplate">
+      <div class="w-full h-vh d-flex flex-column justify-content-center align-items-center">
+        <div class="mb-3">Cargando el detalle del producto...</div>
+        <div class="sk-chase">
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+        </div>
       </div>
-      <div class="d-flex flex-row align-items-center">
-        <h1 class="product-detail_name text-uppercase">{{ product.name }}</h1>
-      </div>
-      <div class="d-flex flex-row align-items-center">
-        <p class="product-detail_sku">SKU: {{ product.partNumber }}</p>
-      </div>
-      <div class="d-flex flex-row align-items-center">
-        <p class="product-detail_short-description">
-          {{ product.shortDescription }}
-        </p>
-      </div>
-      <div class="d-flex flex-column">
-        <div class="d-flex flex-row align-items-center mb-1">
-          <div class="p-0 col-6 d-flex justify-content-start">
-            <p class="product-detail_price">Normal</p>
+    </ng-container>
+    <ng-template #showTemplate>
+      <div class="container mx-auto d-flex flex-row product-detail mt-5">
+        <div class="col-7 product-detail_img-viewer">
+          <app-img-viewer [imageProp]="product.images"></app-img-viewer>
+        </div>
+        <div class="d-flex flex-column col-5">
+          <div class="d-flex flex-row align-items-center">
+            <p class="product-detail_brand text-uppercase">{{ brand }}</p>
           </div>
-          <div class="p-0 col-6 d-flex justify-content-end">
-            <p class="product-detail_price">
-              {{ product.prices.listPrice | currency: "CLP" }}
+          <div class="d-flex flex-row align-items-center">
+            <h1 class="product-detail_name text-uppercase">{{ product.name }}</h1>
+          </div>
+          <div class="d-flex flex-row align-items-center">
+            <p class="product-detail_sku">SKU: {{ product.partNumber }}</p>
+          </div>
+          <div class="d-flex flex-row align-items-center">
+            <p class="product-detail_short-description">
+              {{ product.shortDescription }}
             </p>
           </div>
-        </div>
+          <div class="d-flex flex-column">
+            <div class="d-flex flex-row align-items-center mb-1">
+              <div class="p-0 col-6 d-flex justify-content-start">
+                <p class="product-detail_price">Normal</p>
+              </div>
+              <div class="p-0 col-6 d-flex justify-content-end">
+                <p class="product-detail_price">
+                  {{ product.prices.listPrice | currency: "CLP" }}
+                </p>
+              </div>
+            </div>
 
-        <div *ngIf="product.prices.offerPrice" class="d-flex flex-row align-items-center mb-1">
-          <div class="p-0 col-6 d-flex justify-content-start">
-            <p [class.product-detail_price]="product.prices.cardPrice"
-              [class.product-detail_price_lowest]="!product.prices.cardPrice">
-              Oferta
-            </p>
-          </div>
-          <div class="p-0 col-6 d-flex justify-content-end">
-            <p [class.product-detail_price]="product.prices.cardPrice"
-              [class.product-detail_price_lowest]="!product.prices.cardPrice">
-              {{ product.prices.offerPrice | currency: "CLP" }}
-            </p>
-          </div>
-        </div>
-        <div *ngIf="product.prices.cardPrice" class="d-flex flex-row align-items-center mb-1">
-          <div class="p-0 col-6 d-flex justify-content-start">
-            <p class="product-detail_price_lowest">Tarjeta Ripley</p>
-          </div>
-          <div class="p-0 col-6 d-flex justify-content-end">
-            <p class="product-detail_price_lowest">
-              {{ product.prices.cardPrice | currency: "CLP" }}
-            </p>
-          </div>
-        </div>
-        <div *ngIf="product.prices.discountPercentage" class="d-flex flex-row align-items-center mb-1">
-          <div class="p-0 col-6 d-flex justify-content-start align-items-center">
-            <p class="product-detail_discount">Descuento</p>
-            <p></p>
-          </div>
+            <div *ngIf="product.prices.offerPrice" class="d-flex flex-row align-items-center mb-1">
+              <div class="p-0 col-6 d-flex justify-content-start">
+                <p [class.product-detail_price]="product.prices.cardPrice"
+                  [class.product-detail_price_lowest]="!product.prices.cardPrice">
+                  Oferta
+                </p>
+              </div>
+              <div class="p-0 col-6 d-flex justify-content-end">
+                <p [class.product-detail_price]="product.prices.cardPrice"
+                  [class.product-detail_price_lowest]="!product.prices.cardPrice">
+                  {{ product.prices.offerPrice | currency: "CLP" }}
+                </p>
+              </div>
+            </div>
+            <div *ngIf="product.prices.cardPrice" class="d-flex flex-row align-items-center mb-1">
+              <div class="p-0 col-6 d-flex justify-content-start">
+                <p class="product-detail_price_lowest">Tarjeta Ripley</p>
+              </div>
+              <div class="p-0 col-6 d-flex justify-content-end">
+                <p class="product-detail_price_lowest">
+                  {{ product.prices.cardPrice | currency: "CLP" }}
+                </p>
+              </div>
+            </div>
+            <div *ngIf="product.prices.discountPercentage" class="d-flex flex-row align-items-center mb-1">
+              <div class="p-0 col-6 d-flex justify-content-start align-items-center">
+                <p class="product-detail_discount">Descuento</p>
+              </div>
 
-          <div class="p-0 col-6 d-flex justify-content-end">
-            <div class="product-detail_discount_arrow">
-              <p class="product-detail_discount_arrow_text">
-                {{ product.prices.discountPercentage }} %
-              </p>
+              <div class="p-0 col-6 d-flex justify-content-end">
+                <div class="product-detail_discount_arrow">
+                  <p class="product-detail_discount_arrow_text">
+                    {{ product.prices.discountPercentage }} %
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="product.prices.ripleyPuntos"
+              class="d-flex flex-row align-items-center mb-1 product-detail_points">
+              <div class="p-0 col-6 d-flex justify-content-start">
+                <p class="product-detail_points_text">Acumulas</p>
+              </div>
+
+              <div class="p-0 col-6 d-flex justify-content-end">
+                <p class="product-detail_points_text">
+                  {{ product.prices.ripleyPuntos }} RipleyPuntos GO
+                </p>
+              </div>
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+              <button mat-raised-button color="primary" class="w-100" type="button" (click)="goBack()">
+                Volver
+              </button>
             </div>
           </div>
         </div>
-        <div *ngIf="product.prices.ripleyPuntos" class="d-flex flex-row align-items-center mb-1 product-detail_points">
-          <div class="p-0 col-6 d-flex justify-content-start">
-            <p class="product-detail_points_text">Acumulas</p>
-            <p></p>
-          </div>
-
-          <div class="p-0 col-6 d-flex justify-content-end">
-            <p class="product-detail_points_text">
-              {{ product.prices.ripleyPuntos }} RipleyPuntos GO
-            </p>
-          </div>
-        </div>
-        <div class="d-flex flex-row justify-content-center">
-          <button mat-raised-button color="primary" class="w-100" type="button" (click)="goBack()">
-            Volver
-          </button>
-        </div>
       </div>
-    </div>
+    </ng-template>
   </div>
-</ng-container>
+
+</div>

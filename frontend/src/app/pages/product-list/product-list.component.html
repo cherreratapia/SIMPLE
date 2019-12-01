@@ -1,9 +1,27 @@
-<div class="container mx-auto">
-  <mat-grid-list cols="3" rowHeight="350">
-    <mat-grid-tile *ngFor="let product of productList" [colspan]="1" [rowspan]="1">
-      <div class="h-100 col p-2">
-        <app-product [product]="product"></app-product>
+<div class="w-full">
+  <app-user-bar></app-user-bar>
+  <div class="container mx-auto mt-5">
+    <ng-container *ngIf="productList.length === 0; else productListContainer">
+      <div class="w-full h-vh d-flex flex-column justify-content-center align-items-center">
+        <div class="mb-3">Cargando los productos...</div>
+        <div class="sk-chase">
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+        </div>
       </div>
-    </mat-grid-tile>
-  </mat-grid-list>
+    </ng-container>
+    <ng-template #productListContainer>
+      <mat-grid-list cols="3" rowHeight="350">
+        <mat-grid-tile *ngFor="let product of productList" [colspan]="1" [rowspan]="1">
+          <div class="h-100 col p-2">
+            <app-product [product]="product"></app-product>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </ng-template>
+  </div>
 </div>

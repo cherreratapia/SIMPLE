@@ -19,7 +19,8 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatButtonModule,
-  MatGridListModule
+  MatGridListModule,
+  MatIconModule
 } from "@angular/material/";
 import { ForgottenPasswordComponent } from "./pages/forgotten-password/forgotten-password.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
@@ -35,7 +36,8 @@ registerLocaleData(localeCL, "es-CL");
 
 import { ToastrModule } from "ngx-toastr";
 import { CarouselModule } from "ngx-owl-carousel-o";
-import { ImgViewerComponent } from './components/img-viewer/img-viewer.component';
+import { ImgViewerComponent } from "./components/img-viewer/img-viewer.component";
+import { UserBarComponent } from "./components/user-bar/user-bar.component";
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { ImgViewerComponent } from './components/img-viewer/img-viewer.component
     ForgottenPasswordComponent,
     ProductComponent,
     ProductDetailComponent,
-    ImgViewerComponent
+    ImgViewerComponent,
+    UserBarComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -62,10 +65,12 @@ import { ImgViewerComponent } from './components/img-viewer/img-viewer.component
     MatInputModule,
     MatButtonModule,
     MatGridListModule,
+    MatIconModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule
   ],
+  exports: [MatIconModule],
   bootstrap: [AppComponent],
   providers: [
     AuthGuard,

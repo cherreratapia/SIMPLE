@@ -23,7 +23,7 @@ export class ProductService {
       .pipe(
         retryWhen((errors: Observable<any>) => {
           return errors.pipe(
-            delay(1000),
+            delay(1500),
             mergeMap(error => {
               if (error.status && error.status === 403) {
                 this.toastrService.error(`Debe iniciar sesión nuevamente`);
@@ -32,7 +32,7 @@ export class ProductService {
                   `Reintentando...`,
                   "Ha ocurrido un error al obtener los productos",
                   {
-                    timeOut: 1500
+                    timeOut: 2000
                   }
                 );
               }
@@ -50,7 +50,7 @@ export class ProductService {
       .pipe(
         retryWhen((errors: Observable<any>) => {
           return errors.pipe(
-            delay(1000),
+            delay(1500),
             mergeMap(error => {
               if (error.status && error.status === 403) {
                 this.toastrService.error(`Debe iniciar sesión nuevamente`);
@@ -59,7 +59,7 @@ export class ProductService {
                   `Reintentando...`,
                   "Ha ocurrido un error al obtener el detalle del producto",
                   {
-                    timeOut: 1500
+                    timeOut: 2000
                   }
                 );
               }
