@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { logger } from "../../shared";
 const randomizeFetch = async (req: any, res: any, next: NextFunction) => {
   try {
     const random = Math.random();
@@ -9,7 +10,7 @@ const randomizeFetch = async (req: any, res: any, next: NextFunction) => {
       next();
     }
   } catch (error) {
-    console.log(`Error ${error.message}`);
+    logger.error(`Error ${error.message}`);
     res.status(400).json({ error: error.message });
   }
 };

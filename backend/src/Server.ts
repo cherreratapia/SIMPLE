@@ -9,6 +9,8 @@ import redis, { RedisError, RedisClient } from "redis";
 import admin from "firebase-admin";
 import axios from "axios";
 import cors from "cors";
+import { logger as LoggerPersistent } from "./shared/Logger";
+
 const serviceAccount = require("../config/simple-ripley-9c988-firebase-adminsdk-mcxxq-a309bc538f.json");
 // Init express
 const app = express();
@@ -24,7 +26,7 @@ const auth = admin.initializeApp({
 */
 
 // Create client of redis
-const client: RedisClient = redis.createClient(6379);
+const client: RedisClient = redis.createClient({ host: "redis" });
 
 // Add middleware/settings/routes to express.
 app.use(logger("dev"));
@@ -36,7 +38,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/api/v1", BaseRouter({ auth, axios, client }));
 
 client.on("error", (err: RedisError) => {
-  console.log(`Error on redis client: ${err.message}`);
+  console.log("error en redis", err.message);
+  LoggerPersistent.error(`Error on redis client: ${err.message}`);
 });
 
 // Export express instance
