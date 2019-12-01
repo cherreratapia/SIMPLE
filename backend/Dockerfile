@@ -7,7 +7,7 @@ RUN apk update && apk upgrade && \
 
 #Argumentos
 ARG ARG_PORT=3000
-
+ENV NODE_TLS_REJECT_UNAUTHORIZED=0
 # baja ultimos fuentes
 COPY . .
 
