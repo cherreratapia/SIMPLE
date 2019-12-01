@@ -50,7 +50,9 @@ const productsHandlers = ({ axios, client }: { axios: any; client: any }) => ({
             res.status(200).json({ data: JSON.parse(productList) });
           } else {
             console.log("else");
+            console.log("skuList");
             for (const SKU of skuList) {
+              console.log("SKU Iterated", SKU);
               const { data } = await axios.get(
                 `https://simple.ripley.cl/api/v2/products/${SKU}`
               );
