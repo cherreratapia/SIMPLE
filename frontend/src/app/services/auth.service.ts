@@ -24,8 +24,12 @@ export class AuthService {
 
   public setUser(User: User, token: string) {
     this.user = User;
-    this.user.token = token;
-    sessionStorage.setItem("user", JSON.stringify(this.user));
+    if (this.user) {
+      this.user.token = token;
+      sessionStorage.setItem("user", JSON.stringify(this.user));
+    } else {
+      sessionStorage.setItem("user", "");
+    }
   }
   public getUser() {
     return this.user;

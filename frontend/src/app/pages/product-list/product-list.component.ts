@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ProductService } from "src/app/services/product.service";
+import { Product } from "src/app/models/product";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-product-list",
@@ -7,13 +9,23 @@ import { ProductService } from "src/app/services/product.service";
   styleUrls: ["./product-list.component.scss"]
 })
 export class ProductListComponent implements OnInit {
-  productList = ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"];
-  constructor(private productService: ProductService) {}
+  productList: Product[] = [];
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit() {
     this.productService
       .get()
-      .then(result => (this.productList = result.data))
-      .catch(err => console.log("error", err));
+      .then(result => {
+        console.log("result", result);
+        this.productList = result.data;
+        console.log(this.productList);
+      })
+      .catch(error => {
+        console.error(`Error: `, error);
+        if (error && error.status && error.status === 403) {
+          console.log("error.status", error);
+          this.router.navigate(["/"]);
+        }
+      });
   }
 }

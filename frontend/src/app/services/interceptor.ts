@@ -19,7 +19,6 @@ export class HttpInterceptorCustom implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // add authorization header with basic auth credentials if available
     const currentUser = this.authService.getUser();
-    console.log("currentUser", currentUser);
     if (currentUser && currentUser.token) {
       request = request.clone({
         setHeaders: {

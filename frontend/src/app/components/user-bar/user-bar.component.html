@@ -1,0 +1,25 @@
+<section class="w-full d-flex justify-content-between shadow pb-2">
+  <div class="d-flex justify-content-start align-items-center">
+    <div class="d-flex align-items-center user-crop ml-2">
+      <img class="img-fluid" src="../../../assets/img/shopping-cart.png" alt="shopping-cart">
+    </div>
+  </div>
+  <div class="d-flex justify-content-end align-items-center mr-2">
+    <ng-container *ngIf="user.photoURL; else stockIcon">
+      <div class="user-crop mr-1">
+        <img [src]="user.photoURL" [alt]="user.displayName">
+      </div>
+    </ng-container>
+    <ng-template #stockIcon>
+      <div class="d-flex align-items-center icon-crop mr-1">
+        <mat-icon>person</mat-icon>
+      </div>
+    </ng-template>
+
+
+    <p>Bienvenido! {{ user.email }}</p>
+    <div class="d-flex align-items-center ml-2 mr-2">
+      <button mat-raised-button (click)="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+</section>

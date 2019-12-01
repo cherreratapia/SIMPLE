@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { NgModule, LOCALE_ID } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -19,14 +19,26 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatButtonModule,
-  MatGridListModule
+  MatGridListModule,
+  MatIconModule
 } from "@angular/material/";
 import { ForgottenPasswordComponent } from "./pages/forgotten-password/forgotten-password.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HttpInterceptorCustom } from "./services/interceptor";
 import { AuthService } from "./services/auth.service";
 import { AuthGuard } from "./services/auth.guard";
-import { ProductComponent } from './components/product/product.component';
+import { ProductComponent } from "./components/product/product.component";
+import { registerLocaleData } from "@angular/common";
+
+import localeCL from "@angular/common/locales/es-CL";
+import { ProductDetailComponent } from "./pages/product-detail/product-detail.component";
+registerLocaleData(localeCL, "es-CL");
+
+import { ToastrModule } from "ngx-toastr";
+import { CarouselModule } from "ngx-owl-carousel-o";
+import { ImgViewerComponent } from "./components/img-viewer/img-viewer.component";
+import { UserBarComponent } from "./components/user-bar/user-bar.component";
+import { FormSignLogComponent } from './form-sign-log/form-sign-log.component';
 
 @NgModule({
   declarations: [
@@ -34,13 +46,19 @@ import { ProductComponent } from './components/product/product.component';
     ProductListComponent,
     SignInComponent,
     ForgottenPasswordComponent,
-    ProductComponent
+    ProductComponent,
+    ProductDetailComponent,
+    ImgViewerComponent,
+    UserBarComponent,
+    FormSignLogComponent
   ],
   imports: [
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    CarouselModule,
     HttpClientModule,
     MatCardModule,
     MatTabsModule,
@@ -49,10 +67,12 @@ import { ProductComponent } from './components/product/product.component';
     MatInputModule,
     MatButtonModule,
     MatGridListModule,
+    MatIconModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule
   ],
+  exports: [MatIconModule],
   bootstrap: [AppComponent],
   providers: [
     AuthGuard,
@@ -60,6 +80,10 @@ import { ProductComponent } from './components/product/product.component';
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorCustom,
       multi: true
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: "es-CL"
     }
   ]
 })

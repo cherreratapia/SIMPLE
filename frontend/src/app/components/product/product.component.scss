@@ -1,0 +1,47 @@
+.product {
+  cursor: pointer;
+
+  .discount {
+    width: 60px;
+    height: 35px;
+    top: -5px;
+    border-radius: 3px;
+    background-color: #e75353;
+    text-align: center;
+    line-height: 35px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .brand {
+    font-size: 12px;
+  }
+
+  .name {
+    font-size: 12px;
+    line-height: 16px;
+    color: rgb(106, 106, 106);
+  }
+
+  .list-price {
+    text-decoration: line-through;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15.6px;
+    color: rgb(106, 106, 106);
+  }
+
+  .offer-price {
+    font-size: 14px;
+    color: rgb(106, 106, 106);
+    line-height: 18.2px;
+  }
+
+  .lowest-price {
+    font-size: 16px;
+    color: #e75353;
+    font-weight: 600;
+    line-height: 20.8px;
+  }
+}
