@@ -1,0 +1,28 @@
+<div class="d-flex flex-column m-4 p-2 px-4 mat-elevation-z2">
+  <h2>{{ title }}</h2>
+  <div class="d-flex flex-column mt-3 mb-3 mx-5">
+    <form class="d-flex flex-column" [formGroup]="formGroup" (ngSubmit)="type === 'login' ? signIn() : signUp()">
+      <mat-form-field class="w-full py-3">
+        <input matInput type="email" placeholder="Correo Electrónico" formControlName="email" email>
+        <mat-icon matSuffix>email</mat-icon>
+        <mat-error *ngIf="formGroup.get('email').hasError('required')">
+          Correo electrónico es <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-full py-3">
+        <input type="password" matInput placeholder="Contraseña" formControlName="password">
+        <mat-icon matSuffix>vpn_key</mat-icon>
+        <mat-error *ngIf="formGroup.get('password').hasError('required')">
+          La contraseña es <strong>obligatoria</strong>
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!formGroup.valid">{{ buttonMessage }}</button>
+      <div *ngIf="type === 'login'" class="d-flex flex-column align-items-center my-3">
+        <a href="javascript:void(0);" (click)="forgotPassword()">¿Olvidaste tu contraseña?</a>
+        <span class="wrong-password mt-2" *ngIf="error">
+          Correo electrónico o contraseña incorrectos
+        </span>
+      </div>
+    </form>
+  </div>
+</div>

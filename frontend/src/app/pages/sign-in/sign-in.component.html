@@ -4,31 +4,8 @@
       <mat-card-content>
         <mat-tab-group>
           <mat-tab label="Iniciar sesión">
-            <div class="d-flex flex-column m-4 p-2 px-4 mat-elevation-z2">
-              <h2>Iniciar sesión</h2>
-              <div class="d-flex flex-column mt-3 mb-3 mx-5">
-                <form class="d-flex flex-column" [formGroup]="login"
-                  (ngSubmit)="signIn(login.get('email').value, login.get('password').value)">
-                  <mat-form-field class="w-full py-3">
-                    <input matInput type="email" placeholder="Correo Electrónico" formControlName="email" email>
-                    <mat-error *ngIf="login.get('email').hasError('required')">
-                      Correo electrónico es <strong>obligatorio</strong>
-                    </mat-error>
-                  </mat-form-field>
-                  <mat-form-field class="w-full py-3">
-                    <input type="password" matInput placeholder="Contraseña" formControlName="password">
-                    <mat-error *ngIf="login.get('password').hasError('required')">
-                      La contraseña es <strong>obligatoria</strong>
-                    </mat-error>
-                  </mat-form-field>
-                  <button mat-raised-button color="primary" type="submit" [disabled]="!login.valid">Iniciar
-                    sesión</button>
-                  <div class="d-flex flex-row justify-content-center my-3">
-                    <a href="javascript:void(0);" (click)="forgotPassword()">¿Olvidaste tu contraseña?</a>
-                  </div>
-                </form>
-              </div>
-            </div>
+            <app-form-sign-log type="login" title="Ingresa tus datos" [formGroup]="login"
+              buttonMessage="Iniciar sesión"></app-form-sign-log>
           </mat-tab>
           <mat-tab label="Registrar">
             <div class="d-flex flex-column m-4 p-2 px-4 mat-elevation-z2">

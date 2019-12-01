@@ -38,6 +38,7 @@ import { ToastrModule } from "ngx-toastr";
 import { CarouselModule } from "ngx-owl-carousel-o";
 import { ImgViewerComponent } from "./components/img-viewer/img-viewer.component";
 import { UserBarComponent } from "./components/user-bar/user-bar.component";
+import { FormSignLogComponent } from './form-sign-log/form-sign-log.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { UserBarComponent } from "./components/user-bar/user-bar.component";
     ProductComponent,
     ProductDetailComponent,
     ImgViewerComponent,
-    UserBarComponent
+    UserBarComponent,
+    FormSignLogComponent
   ],
   imports: [
     ReactiveFormsModule,
