@@ -20,10 +20,10 @@
       {{ product.prices.listPrice | currency: "CLP" }}
     </p>
     <p [class.lowest-price]="!product.prices.cardPrice" [class.offer-price]="product.prices.cardPrice">
-      <mat-icon>credit_card</mat-icon>{{ product.prices.offerPrice | currency: "CLP" }}
+      {{ product.prices.offerPrice | currency: "CLP" }}
     </p>
-    <p *ngIf="product.prices.cardPrice" class="lowest-price">
-      {{ product.prices.cardPrice | currency: "CLP" }}
+    <p *ngIf="product.prices.cardPrice" class="d-flex align-items-center lowest-price">
+      <mat-icon>credit_card</mat-icon> {{ product.prices.cardPrice | currency: "CLP" }}
     </p>
   </div>
 </div>
