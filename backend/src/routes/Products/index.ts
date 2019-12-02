@@ -42,17 +42,11 @@ const productsHandlers = ({ axios, client }: { axios: any; client: any }) => ({
     return client.get(
       productsListCached,
       async (err: any, productList: any) => {
-        console.log("err", err);
-        console.log("productList", productList);
         try {
           if (productList) {
-            console.log("if");
             res.status(200).json({ data: JSON.parse(productList) });
           } else {
-            console.log("else");
-            console.log("skuList");
             for (const SKU of skuList) {
-              console.log("SKU Iterated", SKU);
               const result = await axios.get(
                 `https://simple.ripley.cl/api/v2/products/${SKU}`,
                 {
