@@ -54,7 +54,10 @@ const productsHandlers = ({ axios, client }: { axios: any; client: any }) => ({
             for (const SKU of skuList) {
               console.log("SKU Iterated", SKU);
               const result = await axios.get(
-                `https://simple.ripley.cl/api/v2/products/${SKU}`
+                `https://simple.ripley.cl/api/v2/products/${SKU}`,
+                {
+                  withCredentials: true
+                }
               );
               console.log("result", result);
               products.push(result.data);
